@@ -8,6 +8,12 @@ on:
         description: "Deploy Changes"
         required: true
         default: "main"
+      ReleaseVersion:
+        description: "Release Version"
+        required: true
+        type: string
+        
+
 
 jobs:
   deploy-changes:
