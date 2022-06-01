@@ -1,0 +1,75 @@
+# Prefix : Project Name
+name: Integration-Testing
+
+on: 
+  pull_request:
+  workflow_dispatch:
+
+# env:
+#   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#   AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+#   TERRAFORM_VERSION: ${{ secrets.TERRAFORM_VERSION }}
+#   PREFIX: ${{ secrets.PREFIX }}
+#   APPLICATION: ${{ secrets.APPLICATION }}
+#   S3_BUCKET: ${{ secrets.S3_BUCKET }}
+
+jobs:
+  integration-testing:
+    runs-on: ubuntu-latest
+    container:
+      image: debian:bullseye-slim
+    steps:
+      ## Get the source code to the machine in the current directory
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+
+      - name: Print Output
+        run: |
+          echo "This is integration testing"
+
+      # - name: AWS CLI v2 Installation
+      #   run: |
+      #     curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" 
+      #     unzip awscliv2.zip
+      #     bash aws/install
+      #     aws --version
+      
+      # - name: Create S3 Backend Terraform State
+      #   run: |
+      #     ## Run the backed.sh. The script validates if there is existing S3 Backend Terraform State, otherwise will create one. 
+      #     bash ./terraform/scripts/backend.sh
+
+      # - name: Download artifact
+      #   uses: dawidd6/action-download-artifact@v2
+      #   with:
+      #     name: terraform-plan-artifact
+      #     workflow: terraform-plan.yml         
+      #     workflow_conclusion: success
+      
+      # - name: Display structure of downloaded files
+      #   run: |
+      #     ls -laR | grep platform.plan
+
+      # - name: Copy the platform.plan to the Terraform folder
+      #   run: |
+      #     cp platform.plan ./terraform/platform.plan
+
+      # - name: Terraform Apply
+      #   run: |
+      #     mkdir $GITHUB_WORKSPACE/bin && cd $GITHUB_WORKSPACE/bin
+      #     wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -O terraform.zip
+      #     unzip -o terraform.zip && rm -rf terraform.zip
+      #     chmod +x terraform
+      #     cd $GITHUB_WORKSPACE
+      #     export PATH=$GITHUB_WORKSPACE/bin:$PATH
+      #     terraform --version
+         
+      #     ## Start the Terraform Plan      
+      #     cd ./terraform/
+      #     rm -rf .terraform
+      #     terraform init \
+      #       -backend-config="bucket=${S3_BUCKET}" \
+      #       -backend-config="key=terraform.tfstate" \
+      #       -backend-config="region=${AWS_DEFAULT_REGION}"
+      #     terraform apply platform.plan
