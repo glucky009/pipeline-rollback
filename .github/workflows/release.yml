@@ -20,7 +20,7 @@ on:
 jobs:
   release-project:
     runs-on: ubuntu-latest
-    needs: deploy-changes
+    # needs: deploy-changes
     container:
       image: debian:bullseye-slim
     steps:
