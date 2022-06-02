@@ -2,20 +2,23 @@
 name: Create-Release
 
 on: 
-  workflow_dispatch:
-    inputs:
-      ManualApprove:
-        description: "Deploy Changes"
-        required: true
-        default: "main"
-      ReleaseVersion:
-        description: "Release Version"
-        required: true
-        type: string
-      TagVersion:
-        description: "Tag Version"
-        required: true
-        type: string
+  push:
+    tags:
+    - '*'
+  # workflow_dispatch:
+  #   inputs:
+  #     ManualApprove:
+  #       description: "Deploy Changes"
+  #       required: true
+  #       default: "main"
+  #     ReleaseVersion:
+  #       description: "Release Version"
+  #       required: true
+  #       type: string
+  #     TagVersion:
+  #       description: "Tag Version"
+  #       required: true
+  #       type: string
         
 jobs:
   release-project:
