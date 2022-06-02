@@ -8,10 +8,14 @@ on:
         description: "Deploy Changes"
         required: true
         default: "main"
-      # ReleaseVersion:
-      #   description: "Release Version"
-      #   required: true
-      #   type: string
+      ReleaseVersion:
+        description: "Release Version"
+        required: true
+        type: string
+      TagVersion:
+        description: "Tag Version"
+        required: true
+        type: string
         
 
 
@@ -40,5 +44,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.run_number }}
-          release_name: Release ${{ github.run_number }}
+          tag_name:  ${{ github.event.inputs.TagVersion }}
+          release_name: Release  ${{ github.event.inputs.ReleaseVersion }}
