@@ -2,20 +2,23 @@
 name: Create-Release
 
 on: 
-  workflow_dispatch:
-    inputs:
-      ManualApprove:
-        description: "Deploy Changes"
-        required: true
-        default: "main"
-      ReleaseVersion:
-        description: "Release Version"
-        required: true
-        type: string
-      TagVersion:
-        description: "Tag Version"
-        required: true
-        type: string
+  push:
+    tags:
+    - '*'
+  # workflow_dispatch:
+  #   inputs:
+  #     ManualApprove:
+  #       description: "Deploy Changes"
+  #       required: true
+  #       default: "main"
+  #     ReleaseVersion:
+  #       description: "Release Version"
+  #       required: true
+  #       type: string
+  #     TagVersion:
+  #       description: "Tag Version"
+  #       required: true
+  #       type: string
         
 jobs:
   release-project:
@@ -46,6 +49,6 @@ jobs:
         echo ${{ env.RELEASE_VERSION }}
     - uses: ncipollo/release-action@v1
       with:
-        artifacts: "release.tar.gz,foo/*.txt"
-        bodyFile: "body.md"
+        # artifacts: "release.tar.gz,foo/*.txt"
+        # bodyFile: "body.md"
         token: ${{ secrets.GITHUB_TOKEN }}
